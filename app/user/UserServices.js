@@ -73,7 +73,9 @@ const signupUser = async (req, res) => {
           });
           return;
         }
+        
         const dbPassword = user.password;
+        //console.log(password,dbPassword);
         const matched = await bcrypt.compare(password, dbPassword);
 
   if (!matched) {
