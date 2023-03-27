@@ -90,3 +90,8 @@ const signupUser = async (req, res) => {
     data: user,
   });
 };
+module.exports = {
+    signupUser,
+    loginUser,
+  };
+  
