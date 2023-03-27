@@ -48,3 +48,45 @@ const signupUser = async (req, res) => {
       });
     });
 };
+    const loginUser = async (req, res) => {
+        const { email, password } = req.body;
+      
+        if (!email || !password) {
+          res.status(400).json({
+            status: false,
+            message: `All fields are required`,
+          });
+          return;
+        }
+        if (!verifyEmail(email)) {
+          res.status(400).json({
+            status: false,
+            message: `Email is not valid`,
+          });
+          return;
+        }
+        const user = await userSchema.findOne({ email });
+        if (!user) {
+          res.status(422).json({
+            status: false,
+            message: `Email is not present in our database`,
+          });
+          return;
+        }
+        const dbPassword = user.password;
+        const matched = await bcrypt.compare(password, dbPassword);
+
+  if (!matched) {
+    res.status(422).json({
+      status: false,
+      message: `Credentials does not match`,
+    });
+    return;
+  }
+
+  res.status(200).json({
+    status: true,
+    message: "Login successful",
+    data: user,
+  });
+};
