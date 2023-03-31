@@ -3,7 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const cron = require("node-cron");
 const axios = require("axios");
-//const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -19,7 +19,13 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(webRoutes);
 
-
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.G_EMAIL,
+    pass: process.env.G_PASSWORD,
+  },
+});
 
 const isSiteActive = async (url) => {
   if (!url) return false;
@@ -50,8 +56,19 @@ cron.schedule("0 */1 * * *", async () => {
       }
     );
 
-    if (!isActive ) {
+    if (!isActive && website.isActive) {
       
+      transport.sendMail({
+        from: process.env.G_EMAIL,
+        to: website.userId.email,
+        subject: "Your website has gone down. Please have a look",
+        html: `Your website - <b>${
+          website.url
+        }</b> is down. As we checked on ${new Date().toLocaleDateString(
+          "en-in"
+        )}
+        `,
+      });
     }
   }
 });
