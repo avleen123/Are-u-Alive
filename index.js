@@ -37,7 +37,7 @@ const isSiteActive = async (url) => {
   return true;
 };
 
-cron.schedule("0 */1 * * *", async () => {
+cron.schedule(" */1 * * * *", async () => {
   const allWebsites = await WebsiteSchema.find({}).populate({
     path: "userId",
     select: ["name", "email"],
@@ -53,9 +53,9 @@ cron.schedule("0 */1 * * *", async () => {
       { _id: website._id },
       {
         isActive,
-      }
+      }.exec()
     );
-
+      console.log("checking website",website.url);
     if (!isActive && website.isActive) {
       
       transport.sendMail({
