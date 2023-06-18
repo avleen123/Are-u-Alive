@@ -15,21 +15,21 @@ const schema = new mongoose.Schema(
       require: true,
     },
     tokens: {
-      accessToken: {
-        token: String,
-        expireAt: Date,
-      },
-      refreshToken: {
-        token: String,
-        expireAt: Date,
-      },
-    },
+        accessToken: {
+          token: String,
+          expireAt: Date,
+        },
+        refreshToken: {
+          token: String,
+          expireAt: Date,
+        },
+    }
   },
   {
     timestamps: true,
   }
 );
 
-const userSchema = mongoose.model("User", schema);
+const userSchema = mongoose.model('User', schema);
 
 module.exports = userSchema;
