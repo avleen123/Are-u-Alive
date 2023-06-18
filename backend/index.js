@@ -7,9 +7,9 @@ const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const userRoutes = require("./app/User/UserRoute");
-const webRoutes = require("./app/Website/WebsiteRoutes");
-const WebsiteSchema = require("./app/Website/WebsiteSchema");
+const userRoutes = require("./app/User/UserRoute.js");
+const webRoutes = require("./app/Website/WebsiteRoutes.js");
+const WebsiteSchema = require("./app/Website/WebsiteSchema.js");
 
 const app = express();
 
