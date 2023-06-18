@@ -109,7 +109,7 @@ const signupUser = async (req, res) => {
   if(check){
     res.status(422).json({
       status:false,
-      message:'Email is not valid',
+      message:'Email already exists',
     });
     return;
   }
